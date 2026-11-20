@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<link rel="manifest" href="manifest.json" crossorigin="use-credentials"><meta name="theme-color" content="#1b1030"><link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Drink Up"><title>Drink Up 🍻</title>
+<style>
+:root{color-scheme:dark;--bg:#1b1030;--card:#2a1a4a;--tx:#fff;--mu:#c9b8ee;--ac:#ffc83d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer;border:0;border-radius:14px;padding:12px 20px;font-weight:700;background:var(--ac);color:#222}
+button.s{background:#3b2866;color:#fff}
+h1,h2{margin:.3em 0}
+.logo{font-size:clamp(40px,12vw,72px);font-weight:900;text-align:center;letter-spacing:2px}
+.logo span:nth-child(1){color:#e53935}.logo span:nth-child(2){color:#8e44ad}.logo span:nth-child(3){color:#ffc83d}.logo span:nth-child(4){color:#2e9d4a}.logo span:nth-child(5){color:#ec6fb0}.logo span:nth-child(7){color:#1e57b8}.logo span:nth-child(8){color:#ff9800}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+.menu{display:grid;gap:14px;margin-top:20px}
+.menu button{padding:22px;font-size:18px;text-align:left}
+.menu small{display:block;font-weight:400;opacity:.8;margin-top:4px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.pick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.pick button{font-size:34px;background:var(--card);color:#fff;padding:10px}
+.pick button.on{outline:3px solid var(--ac)}.pick button.x{opacity:.25;pointer-events:none}
+.bw{overflow-x:auto;border-radius:12px;background:#fff1;padding:6px}
+#board{position:relative}#hl{position:absolute;border:4px solid #ffd166;box-shadow:0 0 16px #ffd166;border-radius:6px;pointer-events:none;transition:all .3s}#tks{position:absolute;inset:0;pointer-events:none}.tkn{position:absolute;transform:translate(-50%,-50%);font-size:calc(var(--u)*3.4);filter:drop-shadow(0 2px 3px #000);transition:all .25s}
+.t{border-radius:6px;font-size:9px;font-weight:800;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;position:relative;padding:2px;color:#222;overflow:hidden}
+.t b{font-size:17px}.t.on{outline:3px solid #fff;z-index:2}
+.tk{position:absolute;bottom:0;left:0;right:0;font-size:15px;display:flex;justify-content:center;flex-wrap:wrap}
+#ctr{grid-area:3/4/8/12;display:flex;align-items:center;justify-content:center;border-radius:10px;background:var(--card)}
+#ctr .logo{font-size:42px}
+.panel{background:var(--card);border-radius:16px;padding:14px;margin-top:12px;text-align:center}
+.dice{font-size:56px}.roll{animation:sh .15s infinite}
+@keyframes sh{50%{transform:rotate(25deg) scale(1.15)}}
+.mo{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;z-index:9;padding:16px}
+.mb{background:var(--card);border-radius:20px;padding:22px;max-width:380px;width:100%;text-align:center}
+.mb .big{font-size:60px}
+/* soju */
+.bot{position:relative;width:150px;margin:20px auto;text-align:center}
+.cap{width:62px;height:26px;margin:0 auto;background:#e8e8e8;border-radius:8px 8px 3px 3px;cursor:pointer;transition:transform .5s,opacity .5s;position:relative;z-index:2}
+.cap.shake{animation:tw .4s 3}.cap.pop{transform:translate(70px,-130px) rotate(540deg);opacity:0}
+@keyframes tw{25%{transform:rotate(-14deg)}75%{transform:rotate(14deg)}}
+.neck{width:50px;height:60px;margin:0 auto;background:#2f8f4e;border-radius:6px 6px 0 0}
+.body{width:130px;height:230px;margin:-4px auto 0;background:linear-gradient(90deg,#1f7a3d,#4fbf72,#1f7a3d);border-radius:40px 40px 14px 14px;display:flex;align-items:center;justify-content:center}
+.lab{background:#fff;color:#1e57b8;border-radius:8px;padding:14px 10px;font-weight:900;font-size:20px}
+.inner{width:130px;height:130px;border-radius:50%;margin:10px auto;background:radial-gradient(#fff,#d6d6d6);border:6px solid #bbb;color:#e53935;font-size:62px;font-weight:900;display:flex;align-items:center;justify-content:center;animation:pp .6s}
+@keyframes pp{from{transform:scale(0) rotate(-180deg)}}
+/* king cup */
+#ring{position:relative;width:100%;aspect-ratio:1;margin:0 auto}
+.c{position:absolute;width:9%;aspect-ratio:2/3;transform:translate(-50%,-50%);border-radius:5px;cursor:pointer;background:repeating-linear-gradient(45deg,#7b2cbf,#7b2cbf 4px,#c77dff 4px,#c77dff 8px);border:1.5px solid #fff;transition:opacity .5s,transform .5s}
+.c.go{opacity:0;pointer-events:none}
+.cup{position:absolute;left:50%;top:50%;width:30%;height:36%;transform:translate(-50%,-50%)}
+.glass{position:absolute;inset:0;clip-path:polygon(0 0,100% 0,84% 100%,16% 100%);background:#fff3;border:2px solid #fff}
+.liq{position:absolute;left:0;right:0;bottom:0;height:0;background:linear-gradient(#ffb300,#e65100);transition:height 1.2s;clip-path:polygon(0 0,100% 0,84% 100%,16% 100%)}
+.cup.sk{animation:tw .3s 6}.cup.hot{filter:drop-shadow(0 0 14px #f44)}
+.sg{position:absolute;left:66%;top:26%;width:9%;height:12%;z-index:3;transition:transform 1s;transform-origin:bottom right}
+.sg i{display:block;width:100%;height:100%;clip-path:polygon(0 0,100% 0,85% 100%,15% 100%);background:linear-gradient(#ffb300,#e65100);border:0}
+.sg.pour{transform:translate(-95%,5%) rotate(-80deg)}
+.st{position:absolute;left:52%;top:40%;width:1.5%;height:0;background:#ffb300;transition:height .4s .8s;z-index:2}
+.st.on{height:12%}
+.rk{font-size:clamp(40px,14vw,64px);font-weight:900}
+.cd{background:#fff;color:#222;border-radius:14px;padding:10px 0;width:110px;margin:0 auto 12px}
+.red{color:#d32f2f}
+.stage{position:relative;overflow-x:auto;border-radius:12px}
+#board{position:relative;width:100%}
+.tkn{font-size:calc(var(--u)*3.4);transform:translate(-50%,-50%)}
+#dc{position:absolute;left:49.5%;top:49.8%;transform:translate(-50%,-50%);--s:max(46px,calc(var(--u)*7));width:var(--s);height:var(--s);perspective:500px;cursor:pointer;z-index:3}
+#cb{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 1.2s cubic-bezier(.2,.8,.3,1)}
+.fc{position:absolute;inset:0;background:#fff;border:2px solid #bbb;border-radius:14%;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:14%;box-shadow:inset 0 0 8px #0003}
+.fc i{border-radius:50%;margin:10%}.fc i.o{background:#222}
+.fc:nth-child(1){transform:translateZ(calc(var(--s)/2))}.fc:nth-child(2){transform:rotateY(90deg) translateZ(calc(var(--s)/2))}.fc:nth-child(3){transform:rotateX(90deg) translateZ(calc(var(--s)/2))}.fc:nth-child(4){transform:rotateX(-90deg) translateZ(calc(var(--s)/2))}.fc:nth-child(5){transform:rotateY(-90deg) translateZ(calc(var(--s)/2))}.fc:nth-child(6){transform:rotateY(180deg) translateZ(calc(var(--s)/2))}
+.sb{--w:min(230px,62vw);position:relative;width:var(--w);margin:0 auto 14px;padding-top:calc(var(--w)*.85);cursor:pointer;-webkit-user-drag:none}
+.bi{display:block;width:100%}.cp{position:absolute;left:calc(var(--w)*0.301587);top:calc(var(--w)*(.85 - 0.293651));width:calc(var(--w)*0.412698);transform-origin:50% 100%;z-index:3}
+.bm{position:absolute;left:calc(var(--w)*0.317460);width:calc(var(--w)*0.365079);height:calc(var(--w)*0.365079*.3);top:calc(var(--w)*.85 - var(--w)*0.365079*.15);border-radius:50%;background:radial-gradient(#06210f 40%,#1c5a30);z-index:1}
+.ld{display:none;position:absolute;left:50%;top:calc(var(--w)*.04);width:calc(var(--w)*.62);aspect-ratio:1;margin-left:calc(var(--w)*-.31);border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#cfcfcf 70%,#a8a8a8);border:calc(var(--w)*.03) solid #8f8f8f;align-items:center;justify-content:center;font-size:calc(var(--w)*.26);font-weight:900;color:#d32f2f;transform:rotateX(35deg);z-index:2;box-shadow:0 6px 12px #0006}
+.op .ld{display:flex;animation:ldin .8s .35s both}.op .cp{animation:capfl .9s forwards}.shk .cp{animation:tw .3s 3}
+@keyframes ldin{from{opacity:0;transform:translateY(40%) scale(.3) rotateX(180deg)}to{opacity:1;transform:rotateX(35deg)}}
+@keyframes capfl{40%{transform:translateY(-60%) rotateX(-70deg)}to{transform:translateY(-190%) rotateX(-200deg) scale(1.4);opacity:0}}
+.zb{display:flex;gap:6px;align-items:center;margin-left:auto}.zb button{padding:6px 10px;border-radius:10px}.zb input{width:90px}.zb small{min-width:38px;color:var(--mu)}.top{flex-wrap:wrap}
+.wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+html,body{overscroll-behavior:none}body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.sb{--w:min(170px,46vw);padding-top:calc(var(--w)*.62)}
+.scap{transform-box:fill-box;transform-origin:50% 100%}
+.op .scap{animation:scf .9s forwards}.shk .scap{animation:tw .3s 3}
+@keyframes scf{40%{transform:translateY(-16px) rotate(-14deg)}to{transform:translateY(-110px) rotate(-70deg) scale(1.3);opacity:0}}
+.rr{display:grid;grid-template-columns:30px 1fr;gap:4px 6px;margin:10px 0}.rr b{grid-row:span 2;align-self:center}
+.rr input{background:#1b1030;color:#fff;border:1px solid #5b4690;border-radius:8px;padding:8px;font:inherit;width:100%;-webkit-user-select:text;user-select:text}
+</style></head><body>
+<div class="wrap" id="app"></div>
+<script>
+const $=s=>document.querySelector(s),A=$('#app'),R=n=>Math.floor(Math.random()*n);
+const home=()=>{A.innerHTML=`<div class="logo"><span>D</span><span>R</span><span>I</span><span>N</span><span>K</span> <span>U</span><span>P</span></div>
+<div class="menu"><button onclick="setup()">🎲 Drinking Board Game<small>Pick players, roll the dice and race around the map</small></button>
+<button onclick="soju()">🍾 Soju Cap Game<small>Tap the bottle to reveal a number from 1–99</small></button>
+<button onclick="king()">👑 King Cup<small>52 cards around the big cup</small></button></div>
+<p style="text-align:center;color:var(--mu);font-size:13px;margin-top:24px">Drink responsibly – never drive after drinking. 18+</p>`};
+const bar=t=>`<div class="top"><button class="s" onclick="home()">←</button><h2>${t}</h2></div>`;
+const modal=(h,b='OK',f='')=>{const m=document.createElement('div');m.className='mo';m.innerHTML=`<div class="mb">${h}<br><br><button>${b}</button></div>`;m.querySelector('button').onclick=()=>{m.remove();f&&f()};document.body.appendChild(m)};
+
+/* ===== BOARD ===== */
+const E=['🐹','🐱','🐸','🦊','🐼','🐵','🐙','🦄'];
+const RC=[[0, 805, 147, 118], [147, 805, 173, 118], [320, 805, 141, 118], [461, 805, 207, 118], [668, 805, 162, 118], [830, 805, 160, 118], [990, 805, 172, 118], [1162, 805, 145, 118], [1162, 668, 145, 137], [1162, 532, 145, 136], [1162, 396, 145, 136], [1162, 260, 145, 136], [1162, 118, 145, 142], [1162, 0, 145, 118], [1010, 0, 152, 118], [835, 0, 175, 118], [665, 0, 170, 118], [490, 0, 175, 118], [320, 0, 170, 118], [147, 0, 173, 118], [0, 0, 147, 118], [0, 118, 147, 152], [0, 270, 147, 143], [0, 413, 147, 147], [0, 560, 147, 145], [0, 705, 147, 100], [147, 705, 173, 100], [320, 705, 177, 100], [497, 705, 146, 100], [643, 705, 179, 100], [822, 705, 198, 100], [1020, 705, 142, 100], [1020, 600, 142, 105], [1020, 505, 142, 95], [1020, 410, 142, 95], [1020, 308, 142, 102], [1020, 230, 142, 78], [1020, 118, 142, 112], [895, 118, 125, 112], [675, 118, 220, 112], [550, 118, 125, 112], [396, 118, 154, 112], [272, 118, 124, 112], [150, 118, 122, 112], [150, 230, 122, 110], [150, 340, 122, 97], [150, 437, 122, 163], [150, 600, 120, 105], [270, 600, 130, 105], [400, 600, 125, 105], [525, 600, 192, 105], [717, 600, 178, 105], [895, 600, 125, 105], [895, 477, 125, 123], [895, 320, 125, 157], [895, 230, 125, 90], [770, 230, 125, 90], [625, 230, 145, 90], [515, 230, 110, 90], [400, 230, 115, 90], [272, 230, 128, 90], [272, 320, 128, 130], [272, 450, 128, 150]];
+const D=[['START',"Let's get tipsy!"],['TAKE A SHOT','Take 1 shot!'],['SHOW LAST PHOTO','Show everyone the last photo in your gallery!'],['MOST LIKELY TO...','Finish the sentence, then everyone votes. Most votes drinks!'],['YOUNGEST DRINKS','The youngest player drinks!'],['SING IT','Sing on with the last word of the song. Whoever gets stuck drinks!'],['SPIN THE BOTTLE','Spin the bottle. Whoever it points at drinks!'],['OOPS NOT SO FAST!','Return to your last spot!','ret'],['SPIN & WALK','Spin around 5 times and walk straight. Drink if you fail!'],['ALL BOYS DRINK','All boys drink!'],['HAND GAME','Play rock-paper-scissors with someone. Loser drinks!'],['SWAP PLACES','Swap places with a random player!','sw'],['TAKE A SHOT','Take 1 shot!'],['TOP IT UP!','Top up your glass to 100%!'],['DANCE OR DRINK','Dance or drink!'],['GLASSES ON DRINKS','Everyone wearing glasses drinks!'],['GO BACK 5 STEPS','Go back 5 steps!','m',-5],['ALL GIRLS DRINK','All girls drink!'],['CATEGORY','Pick a category. The first to run out of answers drinks!'],['MAKE A RULE','Make a rule everyone must follow until the game ends!'],['SHORTEST DRINKS','The shortest player drinks!'],['WILD ANIMAL','Act like an animal without making a sound. If no one guesses, drink!'],['MOVE FORWARD 3 STEPS','Move forward 3 steps!','m',3],['PERSON ON YOUR LEFT DRINKS!','The person on your left drinks!'],['MEMORY GAME','Repeat the sequence and add one new word. Whoever slips drinks!'],['EVERYONE DRINKS!','Everyone drinks (except you)!'],['BACK TO START','Back to the start line!','m',-999],["DON'T LAUGH",'Stare at someone for 1 minute. First to laugh drinks!'],['WATER BREAK','Take a break and drink some water!'],['N.H.I.E','Never have I ever. Whoever puts down all 3 fingers first drinks!'],['BFF 4EVER','Choose a person. You both take a sip!'],['SEND HPBD TO YOUR EX','Send "happy birthday" to your ex: if you do, climb the ladder; if not, drink!','lad'],['SWAP PLACES','Swap places with a random player!','sw'],['STFFU','No talking until your next turn!'],['TELEPORT','Teleport to the nearest player!','tp'],['CHANGE YOUR FB AVATAR','Change your Facebook avatar until the game ends!'],['LUCKY','Save one free pass from a drinking penalty!'],['PERSON ON YOUR RIGHT DRINKS!','The person on your right drinks!'],['BIRTHDAY MONTH DRINKS','Anyone whose birthday is this month drinks!'],['THE FLOOR IS LAVA','You have 5 seconds to get your feet off the floor. Too slow, drink!'],['LOST RIGHT HAND','You lose your right hand until your next turn!'],['TOP IT UP!','Top up your glass to 100%!'],['TWERK IT LIKE MILEY','Twerk like Miley!'],['SWAP PLACES','Swap places with a random player!','sw'],['+1 ROLL','Roll again!','ag'],['OLDEST DRINK','The oldest player drinks!'],['2 TRUTHS 1 LIE','Tell 2 truths and 1 lie. Wrong guesses drink!'],['SPIN THE BOTTLE','Spin the bottle. Whoever it points at drinks!'],['TALLEST DRINKS','The tallest player drinks!'],['ONLY SAY ONE WORD','You may only say ONE word for the next 3 turns!'],['SAY A SECRET OR BACK TO N.H.I.E','Tell a secret or go back to N.H.I.E!','ch2'],['MAKE A RULE','Make a rule everyone must follow until the game ends!'],['EVERYONE DRINKS!','Everyone drinks (except you)!'],['PICK 1 PERSON TO TAKE 2 SHOTS','Pick 1 person to take 2 shots!'],['SOBER ALERT!','The most sober player takes a sip!'],['DANCE BATTLE','Dance battle with someone. Loser drinks!'],['LOST 3 TURNS','Lose 3 turns!','sk',3],['DOUBLE OR TROUBLE','Drink and move forward 2 steps, or skip the drink and go back 2 steps!','db'],['SKIP NEXT TURN','Skip your next turn!','sk',1],['TAKE A SHOT','Take 1 shot!'],['REVEAL RECENT CRUSH','Reveal your recent crush or go back 5 steps!','ch1'],['GO BACK 5 STEPS','Go back 5 steps!','m',-5],['FINISH','You win! Now take a sip!']];
+const P=[],L=62;let cur=0,busy=false;
+const zget=k=>{try{return +localStorage.getItem('dz_'+k)||0}catch(e){return 0}};
+function zbar(k,d,ap,ft){let z=zget(k)||d;const e=document.createElement('div');e.className='zb';e.innerHTML='<button class="s">−</button><input type="range" min="40" max="220"><button class="s">+</button><button class="s">Fit</button><small></small>';const[m,r,p,f,s]=e.children;
+const set=v=>{z=Math.max(40,Math.min(220,Math.round(v)));r.value=z;s.textContent=z+'%';try{localStorage.setItem('dz_'+k,z)}catch(x){}ap(z)};
+m.onclick=()=>set(z-10);p.onclick=()=>set(z+10);r.oninput=()=>set(+r.value);f.onclick=()=>set(ft());$('.top').appendChild(e);set(z);addEventListener('resize',()=>document.body.contains(e)&&ap(z))}
+const mc=(h,l,f)=>{const m=document.createElement('div');m.className='mo';m.innerHTML=`<div class="mb">${h}<br><br>${l.map((x,i)=>`<button class="${i?'s':''}" style="margin:4px">${x}</button>`).join('')}</div>`;m.querySelectorAll('button').forEach((b,i)=>b.onclick=()=>{m.remove();f(i)});document.body.appendChild(m)};
+function setup(){let n=3,pk=[];window.S={up:v=>{n=Math.max(2,Math.min(8,n+v));pk.length=Math.min(pk.length,n);d()},pick:e=>{pk.push(e);pk.length>=n?go():d()}};
+const d=()=>{A.innerHTML=bar('Drinking Board Game')+`<div class="panel"><b>Players:</b> <button class="s" onclick="S.up(-1)">−</button> <span style="font-size:24px"> ${n} </span> <button class="s" onclick="S.up(1)">+</button></div><h3>Player ${pk.length+1}/${n}: choose a character</h3><div class="pick">${E.map(e=>`<button class="${pk.includes(e)?'x':''}" onclick="S.pick('${e}')">${e}</button>`).join('')}</div><div style="font-size:30px">${pk.join(' ')}</div>`};
+const go=()=>{P.length=0;pk.forEach((e,i)=>P.push({e,p:0,pv:0,sk:0,nm:'Player '+(i+1)}));cur=0;busy=false;board()};d()}
+function board(){const fc=[[4],[0,8],[0,4,8],[0,2,6,8],[0,2,4,6,8],[0,2,3,5,6,8]].map(f=>`<div class="fc">${[0,1,2,3,4,5,6,7,8].map(i=>`<i class="${f.includes(i)?'o':''}"></i>`).join('')}</div>`).join('');
+A.innerHTML=bar('Drinking Board Game')+`<div class="stage" id="stg"><div id="board"><img src="map.jpg" style="width:100%;display:block"><div id="hl"></div><div id="tks"></div><div id="dc" onclick="roll()"><div id="cb">${fc}</div></div></div></div>`;const bw=zz=>{$('#board').style.width=$('#stg').clientWidth*zz/100+'px';fit();tk()};zbar('b',Math.round(Math.max(100,820/$('#stg').clientWidth*100)),bw,()=>Math.min(100,(innerHeight-100)*1.416/$('#stg').clientWidth*100));turn()}
+const cx=i=>(RC[i][0]+RC[i][2]/2)/13.07,cy=i=>(RC[i][1]+RC[i][3]/2)/9.23;
+const fit=()=>{const s=$('#stg');s&&s.style.setProperty('--u',$('#board').offsetWidth/100+'px')};addEventListener('resize',fit);
+function tk(){const h=$('#hl'),c=RC[P[cur].p];Object.assign(h.style,{left:c[0]/13.07+'%',top:c[1]/9.23+'%',width:c[2]/13.07+'%',height:c[3]/9.23+'%'});$('#tks').innerHTML=P.map(p=>{const g=P.filter(q=>q.p==p.p),k=g.indexOf(p);return `<span class="tkn" style="left:${cx(p.p)+(k-(g.length-1)/2)*3.4}%;top:${cy(p.p)}%">${p.e}</span>`}).join('');h.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})}
+function turn(){tk();const p=P[cur];if(p.sk>0){p.sk--;modal(`<h2>${p.e} ${p.nm}</h2>Turn skipped!`,'Next',nx)}}
+function bottle(f){let a=0;const m=document.createElement('div');m.className='mo';m.innerHTML=`<div class="mb" style="background:none"><h2>🍾 SPIN THE BOTTLE</h2><div id="bt" style="width:90px;height:260px;margin:30px auto;transition:transform 4s cubic-bezier(.15,.7,.2,1)"><svg viewBox="0 0 60 200" height="100%"><rect x="22" y="0" width="16" height="75" rx="5" fill="#2f8f4e"/><rect x="19" y="0" width="22" height="9" rx="3" fill="#ddd"/><rect x="6" y="62" width="48" height="136" rx="16" fill="#3fae63"/><rect x="12" y="105" width="36" height="50" rx="5" fill="#fff"/></svg></div><div id="bs"></div></div>`;document.body.appendChild(m);
+const sp=()=>{a+=1440+R(360);$('#bt').style.transform=`rotate(${a}deg)`;$('#bs').textContent='Spinning…';setTimeout(()=>{$('#bs').innerHTML='Whoever the bottle neck points at drinks!<br><br><button class="s" id="b1">Spin again</button> <button id="b2">Done</button>';$('#b1').onclick=sp;$('#b2').onclick=()=>{m.remove();f()}},4200)};setTimeout(sp,300)}
+function nx(){cur=(cur+1)%P.length;turn()}
+let ox=0,oy=0;
+function roll(){if(busy)return;busy=true;const v=1+R(6),p=P[cur],q={1:[0,0],2:[0,-90],3:[-90,0],4:[90,0],5:[0,90],6:[0,180]}[v];ox+=720;oy+=720;$('#cb').style.transform=`rotateX(${ox+q[0]}deg) rotateY(${oy+q[1]}deg)`;p.pv=p.p;
+setTimeout(async()=>{for(let i=0;i<v&&p.p<L;i++){p.p++;tk();await new Promise(r=>setTimeout(r,230))}busy=false;land()},1300)}
+function land(){const p=P[cur],d=D[p.p];if(p.p>=L)return modal(`<div class="big">🏆</div><h2>${p.e} ${p.nm} wins!</h2>Take a sip to celebrate!`,'Play again',setup);
+if(p.p==6||p.p==47)return bottle(nx);const mv=n=>{p.p=Math.max(0,Math.min(L,p.p+n))},k=d[2],hd=`<h2>${d[0]}</h2>${d[1]}`;let ag=0,ex='';
+if(k=='m')mv(d[3]);else if(k=='sk')p.sk=d[3];else if(k=='ag')ag=1;else if(k=='ret')p.p=p.pv;
+else if(k=='sw'){const o=P.filter(x=>x!=p),q=o[R(o.length)];[p.p,q.p]=[q.p,p.p];ex=`<br>Swapped with ${q.e}`}
+else if(k=='tp'){const o=P.filter(x=>x!=p).sort((a,b)=>Math.abs(a.p-p.p)-Math.abs(b.p-p.p))[0];p.p=o.p;ex=`<br>Teleported to ${o.e}`}
+else if(k=='db')return mc(hd,['Drank 🍺 forward 2',"Didn't drink: back 2"],i=>{mv(i?-2:2);tk();p.p>=L?land():nx()});
+else if(k=='ch1')return mc(hd,['Reveal crush','Go back 5'],i=>{if(i)mv(-5);tk();nx()});
+else if(k=='ch2')return mc(hd,['Tell a secret','Back to N.H.I.E'],i=>{if(i)p.p=29;tk();nx()});
+else if(k=='lad')return mc(hd,['Sent ✅ climb the ladder','Not sent 🍺 drink'],i=>{if(!i)p.p=52;tk();nx()});
+tk();modal(hd+ex,'OK',()=>{p.p>=L?land():ag?turn():nx()})}
+
+/* ===== SOJU ===== */
+function soju(){let n=null,o=0;A.innerHTML=bar('Soju Cap Game')+`<div id="sj" style="text-align:center"></div>`;
+const d=()=>{$('#sj').innerHTML=`<p style="color:var(--mu);max-width:420px;margin:8px auto">${o==1?`Cap number: <b>${n}</b> – whoever picked the number <b>farthest</b> from it drinks!`:'Everyone secretly picks a number from 1–99, then tap the cap. Whoever is farthest from the number inside the cap drinks!'}</p><div class="sb${o==1?' op':''}" id="sb"><div class="ld"><b>${n||''}</b></div><svg class="bsv" viewBox="0 0 200 320" style="display:block;width:100%;overflow:visible"><defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#2a9a48"/><stop offset=".45" stop-color="#7fe39b"/><stop offset="1" stop-color="#238a3f"/></linearGradient></defs><path d="M82 60V118C82 142 40 150 40 188V292Q40 308 56 308H144Q160 308 160 292V188C160 150 118 142 118 118V60Z" fill="url(#gg)" stroke="#14532d" stroke-width="5" stroke-linejoin="round"/><path d="M54 196V284M92 74V116" stroke="#fff" stroke-opacity=".45" stroke-width="8" stroke-linecap="round"/><rect x="42" y="205" width="116" height="74" rx="6" fill="#f4fbf4" stroke="#14532d" stroke-width="4"/><text x="100" y="243" text-anchor="middle" font-size="30" font-weight="900" fill="#1e57b8" font-family="system-ui,sans-serif">SOJU</text><text x="100" y="266" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d" font-family="system-ui,sans-serif">360 ml</text><ellipse cx="100" cy="60" rx="15" ry="5" fill="#0b2a14"/><g class="scap"><rect x="74" y="34" width="52" height="28" rx="7" fill="#1f9d4c" stroke="#14532d" stroke-width="5"/><path d="M84 41v14M94 41v14M104 41v14M114 41v14" stroke="#14532d" stroke-width="3" stroke-linecap="round" opacity=".55"/><rect x="80" y="38" width="22" height="5" rx="2.5" fill="#fff" opacity=".45"/></g></svg></div>${o==1?'<button onclick="soju()">New bottle</button>':''}`;
+if(!o)$('#sb').onclick=()=>{o=2;$('#sb').classList.add('shk');setTimeout(()=>{n=1+R(99);o=1;d()},900)}};d()}
+/* ===== KING CUP ===== */
+const RULES={A:['Ace – All drink','Everyone drinks!'],2:['2 for you','The person who drew the card picks someone to drink.'],3:['3 for me','The person who drew the card drinks!'],4:['4 for floor','Last person to touch the floor drinks!'],5:['5 for guys','Guys drink!'],6:['6 for chicks','Chicks drink!'],7:['7 for heaven','Raise a hand to heaven. The last person drinks!'],8:['8 for mate','Pick a mate to drink with you!'],9:['9 make a rule','Make a rule for the whole table!'],10:['10 category','Pick a category. The first to run out of answers drinks!'],J:['J never have I ever','Never have I ever – anyone who has done it drinks!'],Q:['Q question','Ask someone a question. Anyone who answers with a question drinks!'],K:['K king cup','']};
+RULES.Joker=['JOKER 🤡','Unluckiest card! Take 3 shots in a row!'];RULES.K=['King Cup','Pour anything into the big cup!'];
+const DEF=JSON.parse(JSON.stringify(RULES));let RU=JSON.parse(JSON.stringify(RULES));try{Object.assign(RU,JSON.parse(localStorage.getItem('dz_rules')||'{}'))}catch(x){}
+function editRules(){const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'),O=['A',2,3,4,5,6,7,8,9,10,'J','Q','K','Joker'];const m=document.createElement('div');m.className='mo';
+m.innerHTML=`<div class="mb" style="max-height:88vh;overflow:auto;text-align:left"><h2>Card rules</h2><div style="font-size:12px;color:var(--mu)">Edit the name and rule of each card. K = the first three Kings (the 4th King always drinks the big cup). Joker = the unlucky card.</div>${O.map(k=>`<div class="rr"><b>${k=='Joker'?'🃏':k}</b><input data-k="${k}" data-i="0" value="${esc(RU[k][0])}"><input data-k="${k}" data-i="1" value="${esc(RU[k][1])}"></div>`).join('')}<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button id="rs">Save</button><button class="s" id="rd">Reset defaults</button><button class="s" id="rc">Cancel</button></div></div>`;document.body.appendChild(m);
+const sv=()=>{try{localStorage.setItem('dz_rules',JSON.stringify(RU))}catch(x){}};
+m.querySelector('#rs').onclick=()=>{m.querySelectorAll('input').forEach(i=>RU[i.dataset.k][i.dataset.i]=i.value);sv();m.remove()};
+m.querySelector('#rd').onclick=()=>{RU=JSON.parse(JSON.stringify(DEF));try{localStorage.removeItem('dz_rules')}catch(x){}m.remove()};
+m.querySelector('#rc').onclick=()=>m.remove()}
+
+function king(){const S=['♠','♥','♦','♣'],Rk=['A',2,3,4,5,6,7,8,9,10,'J','Q','K'];let deck=[];S.forEach(s=>Rk.forEach(r=>deck.push({r,s})));deck.push({r:'🃏',s:''},{r:'🃏',s:''});let ks=0,bz=0;
+A.innerHTML=bar('King Cup')+`<div class="stage" id="kst"><div id="ring"><div class="cup" id="cup"><div class="glass"></div><div class="liq" id="lq"></div></div><div class="sg" id="sg"><i></i></div><div class="st" id="st"></div></div></div><p style="text-align:center" id="inf"></p>`;
+$('.top').insertAdjacentHTML('beforeend','<button class="s" onclick="editRules()">✏️ Rules</button>');const rg=$('#ring'),kw=()=>Math.min($('#kst').clientWidth,560);zbar('k',100,zz=>{rg.style.width=kw()*zz/100+'px'},()=>Math.min(100,(innerHeight-150)/kw()*100));deck.forEach((c,i)=>{const o=i<32,k=o?i:i-32,N=o?32:22,R2=o?43:31,a=(k/N)*2*Math.PI+(o?0:.14);const e=document.createElement('div');e.className='c';e.style.left=50+R2*Math.sin(a)+'%';e.style.top=50-R2*Math.cos(a)+'%';e.style.transform=`translate(-50%,-50%) rotate(${a}rad)`;e.onclick=()=>draw(c,e);rg.appendChild(e)});
+const inf=()=>$('#inf').innerHTML=`${deck.length-bz} cards left • Kings drawn: ${ks}/4 👑`;inf();
+function draw(c,e){if(e.classList.contains('go'))return;e.classList.add('go');bz++;inf();const red=c.s=='♥'||c.s=='♦';let h;
+const card=`<div class="cd ${red?'red':''}"><div class="rk">${c.r}</div><div style="font-size:30px">${c.s}</div></div>`;
+if(c.r=='🃏')return modal(card+`<h2>${RU.Joker[0]}</h2>${RU.Joker[1]}`,'Oh no…');
+const r=RU[c.r];
+if(c.r!='K')return modal(card+`<h2>${r[0]}</h2>${r[1]}`);
+ks++;inf();
+if(ks<4)modal(card+`<h2>${RU.K[0]} ${ks}/3 👑</h2>${RU.K[1]}`,'Pour it in!',()=>pour());
+else modal(card+'<h2>FOURTH KING 👑</h2>You must drink the whole big cup!!!','Bottoms up!',()=>{$('#cup').classList.add('sk','hot');setTimeout(()=>{$('#lq').style.height='0';$('#cup').classList.remove('sk','hot');ks=0;inf()},2000)})}
+function pour(){const g=$('#sg'),s=$('#st');g.classList.add('pour');s.classList.add('on');setTimeout(()=>{$('#lq').style.height=Math.min(ks,3)*30+'%'},900);setTimeout(()=>{g.classList.remove('pour');s.classList.remove('on')},2000)}}
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));
+home();
+</script></body></html>
